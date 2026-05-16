@@ -8,6 +8,9 @@ const identity = {
 };
 
 const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
+
+const happy = true;
+const day = "Monday";
 ---
 
 <html lang="zh-CN">
@@ -42,5 +45,20 @@ const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
 			</ul>
 			我的技能:{skills.join(", ")}
 		</p>
+
+		{
+			happy ? (
+				<p>我很高兴能在这里分享我的 Astro 学习之旅！</p>
+			) : (
+				<p>我不太确定我是否喜欢这个 Astro 学习之旅……</p>
+			)
+		}
+		{
+			day ? (
+				<p>今天是{day}，我正在学习 Astro！</p>
+			) : (
+				<p>我不知道今天是星期几……</p>
+			)
+		}
 	</body>
 </html>
