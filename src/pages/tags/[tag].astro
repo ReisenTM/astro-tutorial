@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogPost from "../../components/BlogPost.astro";
+
+// 1. 先读取所有文章
+const allPosts = Object.values(
+    import.meta.glob("../posts/*.md", { eager: true }),
+);
+
+// 2. 提取所有 tag 并去重
+const uniqueTags = new Set(
+    allPosts.flatMap((post: any) => post.frontmatter.tags),
+);
+
+// 3. 告诉 Astro 生成哪些页面（这里是根据已有的 tag 来生成页面的）
+export async function getStaticPaths() {
+    //Map() 方法返回一个新的数组，数组中的元素为原始数组元素调用函数处理后的值
+    return Array.from(uniqueTags).map((tag) => ({
+        params: { tag },
+    }));
+}
+
+// 4. 获取当前 tag
+const { tag } = Astro.params;
+
+// 5. 过滤文章
+const postsFilter = allPosts.filter((post: any) =>
+    post.frontmatter.tags.includes(tag),
+);
+---
+
+<BaseLayout pageTitle={tag}>
+    <p>包含「{tag}」标签的文章</p>
+    {
+        postsFilter.map((post: any) => (
+            <BlogPost url={post.url} title={post.frontmatter.title} />
+        ))
+    }
+</BaseLayout>

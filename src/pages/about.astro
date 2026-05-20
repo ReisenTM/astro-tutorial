@@ -1,8 +1,6 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/global.css";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import Social from "../components/Social.astro";
 
 const pageTitle = "关于我";
 const identity = {
@@ -22,64 +20,52 @@ const fontWeight = "bold";
 const textCase = "uppercase";
 ---
 
-<html lang="zh-CN">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>{pageTitle}</title>
-		<style define:vars={{ skillColor, fontWeight, textCase }}>
-			h1 {
-				color: purple;
-				font-size: 4rem;
-			}
-			.skill {
-				color: var(--skillColor);
-				font-weight: var(--fontWeight);
-				text-transform: var(--textCase);
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<h1>{pageTitle}</h1>
-		<h2>……和我的新 Astro 网站！</h2>
+<BaseLayout pageTitle={pageTitle}>
+	<h2>……和我的新 Astro 网站！</h2>
 
-		<p>
-			我正在学习 Astro
-			的入门教程。这是我网站上的第二个页面，也是我自己建立的第一页面！
-		</p>
+	<p>
+		我正在学习 Astro
+		的入门教程。这是我网站上的第二个页面，也是我自己建立的第一页面！
+	</p>
 
-		<p>
-			随着我完成更多教程，该站点将更新，所以请继续查看我的旅程将如何进行吧！
-		</p>
+	<p>
+		随着我完成更多教程，该站点将更新，所以请继续查看我的旅程将如何进行吧！
+	</p>
 
-		<p>
-			这是一些关于我的信息：
-			<ul>
-				<li>名字：{identity.firstName}</li>
-				<li>国家：{identity.country}</li>
-				<li>职业：{identity.occupation}</li>
-				<li>爱好：{identity.hobbies.join(", ")}</li>
-			</ul>
-			我的技能:{skills.map((skill) => <li class="skill">{skill}</li>)}
-		</p>
+	<p>
+		这是一些关于我的信息：
+		<ul>
+			<li>名字：{identity.firstName}</li>
+			<li>国家：{identity.country}</li>
+			<li>职业：{identity.occupation}</li>
+			<li>爱好：{identity.hobbies.join(", ")}</li>
+		</ul>
+		我的技能:{skills.map((skill) => <li class="skill">{skill}</li>)}
+	</p>
 
-		{
-			happy ? (
-				<p>我很高兴能在这里分享我的 Astro 学习之旅！</p>
-			) : (
-				<p>我不太确定我是否喜欢这个 Astro 学习之旅……</p>
-			)
+	{
+		happy ? (
+			<p>我很高兴能在这里分享我的 Astro 学习之旅！</p>
+		) : (
+			<p>我不太确定我是否喜欢这个 Astro 学习之旅……</p>
+		)
+	}
+	{
+		day ? (
+			<p>今天是{day}，我正在学习 Astro！</p>
+		) : (
+			<p>我不知道今天是星期几……</p>
+		)
+	}
+	<style define:vars={{ skillColor, fontWeight, textCase }}>
+		h1 {
+			color: purple;
+			font-size: 4rem;
 		}
-		{
-			day ? (
-				<p>今天是{day}，我正在学习 Astro！</p>
-			) : (
-				<p>我不知道今天是星期几……</p>
-			)
+		.skill {
+			color: var(--skillColor);
+			font-weight: var(--fontWeight);
+			text-transform: var(--textCase);
 		}
-		<Social platform="github" username="ReisenTM" />
-		<Social platform="bilibili" username="ReisenTM" />
-		<Footer />
-	</body>
-</html>
+	</style>
+</BaseLayout>

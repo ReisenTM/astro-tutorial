@@ -1,33 +1,24 @@
 ---
-import "../styles/global.css";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import Social from "../components/Social.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BlogPost from "../components/BlogPost.astro";
+//Object.values() 就是 把一个【对象】变成【数组】
+const allPosts = Object.values(
+	// 	默认情况下，它返回一个对象：
+	// 键：文件路径
+	// 值：懒加载函数（暂时不用管）
+	import.meta.glob("./posts/*.md", { eager: true }),
+);
 
 const pageTitle = "我的 Astro 学习博客";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{pageTitle}</title>
-	</head>
-	<body>
-		<Header />
-
-		<h1>{pageTitle}</h1>
-		<p>这是我的 Astro 学习笔记</p>
-		<ul>
-			<li><a href="/posts/post-1/">文章 1</a></li>
-			<li><a href="/posts/post-2/">文章 2</a></li>
-			<li><a href="/posts/post-3/">文章 3</a></li>
-		</ul>
-		<Social platform="github" username="ReisenTM" />
-		<Social platform="bilibili" username="ReisenTM" />
-		<Footer />
-	</body>
-</html>
+<BaseLayout pageTitle={pageTitle}>
+	<p>在这里，我将分享我的 Astro 学习之旅。</p>
+	<ul>
+		{
+			allPosts.map((post: any) => (
+				<BlogPost url={post.url} title={post.frontmatter.title} />
+			))
+		}
+	</ul>
+</BaseLayout>
